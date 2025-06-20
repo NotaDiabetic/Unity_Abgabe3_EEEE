@@ -5,7 +5,9 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float moveSpeed = 6f;
     [SerializeField] private float jumpForce = 8f;
     private Rigidbody2D rb;
-    private bool isGrounded;
+    [SerializeField] private float jumpCount = 2;
+    [SerializeField] private bool canDoubleJump = false;
+
 
     void Start()
     {
@@ -17,25 +19,54 @@ public class PlayerControls : MonoBehaviour
         float inputX = Input.GetAxisRaw("Horizontal");
         rb.linearVelocity = new Vector2(inputX * moveSpeed, rb.linearVelocity.y);
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && jumpCount >= 1)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            jumpCount--;
         }
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Ground"))
         {
-            isGrounded = true;
+            if (canDoubleJump == true)
+            {
+                jumpCount = 2;
+            }
+            else
+            {
+                jumpCount = 1;
+            }
+
         }
+
     }
+
     private void OnCollisionExit2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Ground"))
         {
-            isGrounded = false;
+            if (canDoubleJump == true)
+            {
+                jumpCount = 1;
+            }
+            else
+            {
+                jumpCount = 0;
+            }
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Hyperdrive"))
+        {
+            Debug.Log(message: "Waga Baga Bobo");
+            canDoubleJump = true;
+            Destroy(other.gameObject);
+        }
+    }
+
 
 
 }
