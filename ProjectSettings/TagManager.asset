@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ground
   - Hyperdrive
+  - Money
+  - Gold
   layers:
   - Default
   - TransparentFX
