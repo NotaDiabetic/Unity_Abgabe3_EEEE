@@ -8,6 +8,7 @@ public class UiControls : MonoBehaviour
     [SerializeField] public GameObject panelLost;
     [SerializeField] public GameObject panelWon;
     [SerializeField] public GameObject panelMainMenu;
+    [SerializeField] public GameObject panelCountdown;
     [SerializeField] public TextMeshProUGUI textMoneyCounter;
     [SerializeField] public TextMeshProUGUI textGoldCounter;
     [SerializeField] private TimerScript tc;
@@ -17,6 +18,7 @@ public class UiControls : MonoBehaviour
         panelMainMenu.SetActive(true);
         panelLost.SetActive(false);
         panelWon.SetActive(false);
+        panelCountdown.SetActive(false);
     }
 
     public void UpdateMoneyText(int newMoneyCount)

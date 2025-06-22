@@ -22,7 +22,7 @@ public class PlayerControls : MonoBehaviour
 
     void Update()
     {
-        if (uiController.panelMainMenu.activeSelf == false && uiController.panelWon.activeSelf == false && uiController.panelLost.activeSelf == false)
+        if (uiController.panelMainMenu.activeSelf == false && uiController.panelWon.activeSelf == false && uiController.panelLost.activeSelf == false && uiController.panelCountdown.activeSelf == false)
         {
             canMove = true;
         }

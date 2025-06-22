@@ -8,8 +8,10 @@ public class TimerScript : MonoBehaviour
 {
     private bool timerRunning;
     private float time;
+    private int countTime = 3;
     [SerializeField] private TMP_Text text;
-    
+    [SerializeField] private TMP_Text countdown;
+    [SerializeField] private UiControls uic;
 
     void Start()
     {
@@ -29,7 +31,23 @@ public class TimerScript : MonoBehaviour
 
     public void StartTimer()
     {
+        StartCoroutine(StartCountdown());
+    }
+    private IEnumerator StartCountdown()
+    {
+        uic.panelCountdown.SetActive(true);
+        countdown.text = countTime.ToString();
+        yield return new WaitForSeconds(1f);
+        countTime--;
+        countdown.text = countTime.ToString();
+        yield return new WaitForSeconds(1f);
+        countTime--;
+        countdown.text = countTime.ToString();
+        yield return new WaitForSeconds(1f);
+        countTime--;
+        countdown.text = countTime.ToString();
         timerRunning = true;
+        uic.panelCountdown.SetActive(false);
     }
 
     public void StopTimer()
