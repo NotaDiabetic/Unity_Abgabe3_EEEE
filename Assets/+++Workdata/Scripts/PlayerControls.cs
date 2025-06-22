@@ -7,11 +7,12 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float jumpForce = 8f;
     private Rigidbody2D rb;
     [SerializeField] private float jumpCount = 2;
-    [SerializeField] private float Money = 0;
-    [SerializeField] private float Gold = 0;
+    [SerializeField] public int Money = 0;
+    [SerializeField] public int Gold = 0;
     [SerializeField] private bool canDoubleJump = false;
     [SerializeField] private bool canMove = false;
     [SerializeField] private UiControls uiController;
+    [SerializeField] private TimerScript tc;
 
 
     void Start()
@@ -49,7 +50,20 @@ public class PlayerControls : MonoBehaviour
             {
                 jumpCount = 1;
             }
-
+        }
+         if (other.gameObject.CompareTag("Goal"))
+        {
+            if (Gold >= 3)
+            {
+                uiController.ShowPanelWon();
+                tc.StopTimer();
+                canMove = false;
+            }
+            else
+            {
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, 2 * jumpForce);
+                Debug.Log(message: "Waga Baga Bobo");
+            }
         }
 
     }
@@ -67,13 +81,13 @@ public class PlayerControls : MonoBehaviour
                 jumpCount = 0;
             }
         }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Hyperdrive"))
         {
-            Debug.Log(message: "Waga Baga Bobo");
             canDoubleJump = true;
             Destroy(other.gameObject);
         }
@@ -82,29 +96,24 @@ public class PlayerControls : MonoBehaviour
         {
             Money++;
             Destroy(other.gameObject);
+            uiController.UpdateMoneyText(Money);
         }
 
         if (other.gameObject.CompareTag("Gold"))
         {
             Gold++;
             Destroy(other.gameObject);
+            uiController.UpdateGoldText(Gold);
         }
 
         if (other.gameObject.CompareTag("Danger"))
         {
             Destroy(this.gameObject);
             uiController.ShowPanelLost();
+            tc.StopTimer();
             canMove = false;
         }
 
-        if (other.gameObject.CompareTag("Goal"))
-        {
-            if (Gold >= 3)
-            {
-                uiController.ShowPanelWon();
-                canMove = false;
-            }
-        }
     }
 
 

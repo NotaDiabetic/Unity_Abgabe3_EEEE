@@ -8,6 +8,8 @@ TagManager:
   - Hyperdrive
   - Money
   - Gold
+  - Goal
+  - Danger
   layers:
   - Default
   - TransparentFX

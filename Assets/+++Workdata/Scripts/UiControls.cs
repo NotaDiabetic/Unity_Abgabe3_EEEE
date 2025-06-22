@@ -8,8 +8,9 @@ public class UiControls : MonoBehaviour
     [SerializeField] public GameObject panelLost;
     [SerializeField] public GameObject panelWon;
     [SerializeField] public GameObject panelMainMenu;
-    [SerializeField] private TextMeshProUGUI textMoneyCounter;
-    [SerializeField] private TextMeshProUGUI textGoldCounter;
+    [SerializeField] public TextMeshProUGUI textMoneyCounter;
+    [SerializeField] public TextMeshProUGUI textGoldCounter;
+    [SerializeField] private TimerScript tc;
 
     private void Start()
     {
@@ -20,12 +21,12 @@ public class UiControls : MonoBehaviour
 
     public void UpdateMoneyText(int newMoneyCount)
     {
-        textMoneyCounter.text = newMoneyCount.ToString();
+        textMoneyCounter.text = newMoneyCount + "/18 Money Piles".ToString();
     }
 
     public void UpdateGoldText(int newGoldCount)
     {
-        textGoldCounter.text = newGoldCount.ToString();
+        textGoldCounter.text = newGoldCount + "/3 Gold Bars (need 3 to win)".ToString();
     }
 
     public void ShowPanelLost()
@@ -36,6 +37,7 @@ public class UiControls : MonoBehaviour
     public void StartGame()
     {
         panelMainMenu.SetActive(false);
+        tc.StartTimer();
     }
 
     public void ShowPanelWon()
